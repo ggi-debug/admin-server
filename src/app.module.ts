@@ -9,6 +9,10 @@ import { DbService } from './db.service';
 import { HdModule } from './hd/hd.module';
 import { TestModule } from './test/test.module';
 import { ConfigmouleModule } from './configmoule/configmoule.module';
+import { ArticleModule } from './article/article.module';
+import {resolve} from "path";
+import { ConfigModule } from "@nestjs/config";
+import config from "./config";
 //读取.env 到 process.env 环境变量中
 
 
@@ -20,8 +24,15 @@ import { ConfigmouleModule } from './configmoule/configmoule.module';
 
 // 命令创建 service层文件 nest g s hd --no-spec --flat -d
 // --no-spec 不创建测试文件  --flat 不创建子目录  --d 查看创建的目录
+
+const paths = resolve(__dirname,'./configure')
 @Module({
-  imports: [UserModule, HdModule, TestModule, ConfigmouleModule],
+  imports: [UserModule, HdModule, TestModule, ConfigmouleModule.register({path:paths}), ArticleModule,
+  ConfigModule.forRoot({
+    isGlobal:true,
+    load:[...config]
+  })
+  ],
   controllers: [AppController],
   providers: [AppService,ConfigServices,
     {
