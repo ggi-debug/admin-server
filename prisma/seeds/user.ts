@@ -3,7 +3,7 @@ import { Random } from 'mockjs'
 import { create } from '../helper'
 // 创建prisma对象
 export async function User() {
-  create(100, async (prisma: PrismaClient) => {  
+  create(1, async (prisma: PrismaClient) => {
     await prisma.user.create({
         data:{
             email:Random.email(),

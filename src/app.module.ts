@@ -12,6 +12,8 @@ import { ConfigmouleModule } from './configmoule/configmoule.module';
 import { ArticleModule } from './article/article.module';
 import {resolve} from "path";
 import { ConfigModule } from "@nestjs/config";
+import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth.service';
 import config from "./config";
 //读取.env 到 process.env 环境变量中
 
@@ -31,7 +33,8 @@ const paths = resolve(__dirname,'./configure')
   ConfigModule.forRoot({
     isGlobal:true,
     load:[...config]
-  })
+  }),
+  AuthModule
   ],
   controllers: [AppController],
   providers: [AppService,ConfigServices,
@@ -47,7 +50,8 @@ const paths = resolve(__dirname,'./configure')
           },3000)
         })
       }
-    }
+    },
+    AuthService
     ]
 })
 export class AppModule {}
